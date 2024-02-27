@@ -1,0 +1,1550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRUDAPPLICATION</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'poppins',sans-serif;
+        }
+        .containerr{
+            width: 100%;
+            height: 100vh;
+            background-color: rgb(54, 111, 160);
+            padding: 20px 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .form_container{
+            width: 30%;
+            height: 80%;
+            background-color: white;
+            border-radius: 10px;
+            padding: 10px;
+         } 
+         @media screen and (max-width:600px){
+            .form_container{
+                width: 95%;
+                font-size: 1.4rem;
+                align-items: center;
+            }
+            table .table th{
+                
+                height: auto;
+            }
+
+         }
+        .create_form input , .update_form input{
+            padding: 8px;
+            font-size: 15px;
+        }
+        .create_form,.update_form{
+            display: none;
+        }
+        .create_form button , .update_form button{
+            padding: 10px 50px;
+            background-color: violet;
+            color: white;
+            cursor: pointer;
+            margin: 5px;
+            font-size: 15px;
+        }
+        .addbtn{
+            padding: 10px 30px;
+            background-color: violet;
+            color: white;
+            font-size: 15px;
+        }
+        .addbtn:hover{
+            background-color: green;
+            cursor: pointer;
+            transform: translateY(-5px);
+        }
+        .addbtn:active{
+            background-color: brown;
+        }
+        .create_form button:hover , .update_form button{
+            background-color: green; 
+            transform: scale(1);
+        }
+        .create_form button:active , .update_form button{
+            background-color: brown;
+        }
+        /* @media screen and(max-width:1100px){
+            .form_container{
+                width: 95%;
+            }  */
+            
+            /* .create_form input , .update_form input{
+                width: 100%;
+                margin-bottom: 5px;
+            } 
+        }  */
+        /* @media screen and(max-width:800px){
+            .home{
+               text-align: center;
+               width: auto;
+
+            }
+        } */
+        /* @media screen and(min-width:600px){
+            .form_container{
+                width: 70%;
+            } 
+           
+        }  */
+        .table{
+            margin-top: 10px;
+            width: 100%;
+            text-align: center;
+        }
+        .edit{
+            background-color: green;
+            padding: 10px 15px;
+            color: white;
+            font-size: 15px;
+            cursor: pointer;
+            transition: all 5s;
+            border: 1ppx solid black;
+            border-top-right-radius: 0;
+            margin: 5px;
+        }
+        .edit:hover{
+            background-color: yellow;
+            transform: translateY(-5px);
+            border-top-right-radius: 20px;
+        }
+        .delet{
+            background-color:red ;
+            color: white;
+            font-size: 15px;
+            padding: 10px 15px;
+            cursor: pointer;
+            margin: 5px;
+            border: 1px solid black;
+            border-top-right-radius: 0;
+            transition: all 5s;
+        }
+        .delet:hover{
+            background-color: yellow;
+            transform: translateY(-5px);
+            border-top-right-radius: 20px;
+        }
+        .content_u{
+            width: 100%;
+            height: 100vh;
+            background-color: rgb(103, 109, 114);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .library_content{
+            width: 70%;
+            height: 80%;
+            background-color: white;
+            border-radius: 10px;
+            padding: 10px;
+        }
+        .content_create input ,.content_update input{
+            padding: 8px;
+            font-size: 15px;
+        }
+        .content_create , .content_update{
+            display: none;
+        }
+        .addbook{
+            padding: 10px 30px;
+            background-color: violet;
+            color: white;
+            font-size: 15px;
+        }
+        @media screen and(max-width:800px){
+            .library_content{
+                width: 95%;
+            } 
+        }
+        .utabel{
+            margin-top: 10px;
+            width: 100%;
+            text-align: center;
+        }
+        .content_create button ,.content_update button{
+            padding: 10px 50px;
+            background-color: rgb(97, 165, 37);
+            color: white;
+            cursor: pointer;
+            margin: 5px;
+            font-size: 15px;
+        }
+        .main_class{
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            margin: 20px;
+
+        }
+        .input_container{
+            display: flex;
+            align-items: center;
+            border: 1px solid #ff6e00;
+            padding: 5px;
+            width: 300px;
+            height: 50px;
+            border-radius: 50px;
+            margin: 10px;
+            position: relative;
+            transition: width 1.5s;
+        }
+
+        .search_class{
+           margin:10px 50px;
+           margin-left: 20px;
+           width: 100%;
+           color: #ff6e00;
+           border: none;
+           background: transparent;
+           outline: none;
+           transition: 0.5s;
+
+        }
+        .glass{
+            position: absolute;
+            right: 15px;
+            width: 25px;
+            text-align: center;
+            margin: 0 auto;
+            cursor: pointer;
+            color: yellow;
+        }
+        .main_class ul , li{
+            display: inline;
+            margin-left: 40px;
+            font-family: sans-serif;
+            text-transform: uppercase;
+            position: relative;
+            animation: move 2s linear infinite;
+            text-decoration: none;
+            color: #ff6e00;
+           
+        }
+        @keyframes move{
+            0%{
+                color: red;
+            }
+            50%{
+                color: green;
+            }
+            100%{
+                color: blue;
+            }
+        }
+
+        .main_class ul li:hover{
+            text-decoration: underline;
+            transform: translateY(-5px);
+        }
+        .main_class ul li a{
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .core{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .container_ui{
+            width: 70%;
+            padding: 3rem;
+            box-shadow: 10px 10px 40px 5px #e0e0e0;
+            margin-top: 5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .content_container h1{
+            font-family: sans-serif;
+            font-size: 2rem;
+            color: #2c2c2c;
+        }
+        .content_container p{
+            font-family: sans-serif;
+            line-height: 1.4;
+            margin-bottom: 2rem;
+            color: #444444;
+            width: 26rem;
+        }
+        .img{
+            transform: translateX(-120px);
+            margin-top: 1rem;
+            width: 350px;
+            height: 350px;
+            border-radius: 300px;
+            background: url(chicken.jpg);
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
+        }
+        .int{
+            width: 80%;
+            margin: 0 auto;
+            margin-top: 5rem;
+            padding: 50px;
+        }
+        .int span{
+            display: flex;
+            flex-wrap: wrap;
+            list-style: none;
+        }
+        .in{
+            padding: 10px 20px;
+            border: 2px solid #ff6e00;
+            color: #ff6e00;
+            font-family: sans-serif;
+            border-radius: 100px;
+        }
+        .chart{
+            padding: 10px 60px;
+            border: 1px solid black;
+            border-radius: 20px;
+            background-color: #ff6e00;
+            color: white;
+            font-size: 15px;
+            border-top-right-radius: 0;
+        }
+        .chart:hover{
+            transform: translateY(-5px);
+            border-top-right-radius: 20px;
+        }
+        .heading{
+            text-align: center;
+        }
+        .heading h2{
+            font-size: 2rem;
+            color: black;
+            margin-bottom: 0.5rem;
+        }
+        .shop_container{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        .shop_box{
+            position: relative;
+            flex: 1 1 17rem;
+            box-shadow: 0 4px 4px rgb(14 55 54 /15%);
+            border-radius: 0.5rem;
+            height: auto;
+        }
+        .shop_img{
+            width: 100%;
+            height: 300px;
+            border-radius: 0.5rem;
+            overflow: hidden;
+
+        }
+        .shop_img img{
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+        .shop_img img:hover{
+            transform: scale(1.1);
+            transition: all 0.5s;
+        }
+        .shop_box h3{
+            font-size: 1rem;
+            font-weight: 500;
+            color: black;
+            padding: 10px;
+        }
+        .shop_box h2{
+            font-size: 1.2rem;
+            color: rgb(91, 235, 94);
+            letter-spacing: 1px;
+            padding: 10px;
+        }
+        .shop_box .shopping_ui{
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            font-size: 20px;
+            padding: 10px;
+            color: white;
+            background-color: rgb(66, 219, 114);
+            border-radius: 0 4px 0 4px;
+        }
+        .shop_box .shopping_ui:hover{
+            background-color: #444444;
+        }
+        .shop{
+            background-color: rgb(255, 255, 255);
+        }
+        .customer_container{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .customer_container .tox_container{
+            flex: 1 1 16rem;
+            text-align: center;
+            box-shadow: 0 4px 0 4px rgb(14 55 54 /15%);
+            padding: 20px;
+            border-radius: 0.5rem;
+            width: 50%;
+        }
+        .tox_container img{
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid black;
+        }
+        .tox_container .fa{
+            color:rgb(91, 235, 94) ;
+            margin-top: 0.5rem;
+        }
+        .uuu{
+            width: 100%;
+            padding: 10px 30px;
+            border-radius: 20px;
+            margin: 10px;
+            margin-top: 3%;
+        }
+        .submit{
+            background-color: #ff6e00;
+            color: white;
+            padding: 10px 50px;
+            border-radius: 10px;
+            margin-left: 2%;
+        }
+        .submit:hover{
+            background: green;
+        }
+    /* student portal */
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'poppins',sans-serif;
+        }
+        body{
+            background-color: rgb(255, 255, 255);
+        }
+        .student{
+            background-color: #000000;
+        }
+        .heroo{
+            width: 100%;
+            position: fixed;
+            min-height: 100vh;
+            position: relative;
+            padding-top: 5px;
+    
+        }
+        .ball{
+            padding: 10px 5px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin: 10px 0;
+            background-color: #3e7eee;
+        }
+        .logo{
+             width: 140px;
+             margin-left: 10%;
+        }
+        .ball  li{
+            display: inline-block;
+            list-style: none;
+            margin: 10px 15px;
+        }
+        .ball  li a{
+            text-decoration: none;
+            color: white;
+            font-weight: 400;
+        }
+        .login-btn{
+            text-decoration: none;
+            color: #f3eded;
+            background-image: linear-gradient(45deg,#df4881,#c430d7);
+            margin-right: 10%;
+            font-weight: 400;
+            padding: 10px 40px;
+            border-radius: 10px;
+        }
+        .login-btn:hover{
+                text-decoration: underline;
+                transform: translateY(-5px);
+            }
+            /* .btn{
+                display: inline-block;
+                text-decoration: none;
+                padding: 10px 40px;
+                color: #fff;
+                background-image: linear-gradient(45deg,#df4881,#c430d7);
+                font-size: 14px;
+                border-radius: 30px;
+                border-top-right-radius: 0;
+                transition: all 0.5s;
+                box-shadow: 5px 5px black;
+
+            } */
+            .join-btn {
+                text-decoration: none;
+                padding: 10px 40px;
+                color: #fff;
+                background-image: linear-gradient(45deg,yellow,blue);
+                font-size: 14px;
+                border-radius: 30px;
+                border-top-right-radius: 0;
+                margin-left: 20%;
+                transition: all 0.5s;
+                box-shadow: 5px 5px skyblue;
+            }
+            .join-btn:hover{
+                border-top-right-radius: 30px;
+            }
+
+            .content{
+                margin-top: 10%;
+                max-width: 600px;
+            }
+            .content h1{
+                font-size: 70px;
+                margin-left: 20%;
+                color: #222;
+                border: 2px solid rgb(234, 13, 13);
+                border-right: transparent;
+                width: 60%;
+            }
+            .content p{
+                margin: 10px 0 30px;
+                color: #efe8e8;
+                margin-left: 20%;
+
+
+            }
+            .content .btn{
+                padding: 15px 80px;
+            }
+            .content .join-btn{
+                padding: 15px 80px;
+            }
+            /* .btn:hover{
+                border-top-right-radius: 30px;
+            } */
+            .text{
+                color: #df4881;
+            }
+            .text:hover{
+                text-decoration: underline;
+            }
+            @media screen and(max-width:400px){
+                .feature-image{
+                    width: 95%;
+                    margin-top: 1rem;
+                }
+            }
+            .feature-image{
+                width: 530px;
+                position: absolute;
+                bottom: 0;
+                right: 10%;
+                margin-bottom: 16%;
+            }
+            .anim{
+                opacity: 0;
+                transform: translateY(30px);
+                animation: moveup 0.5s linear forwards;
+            }
+            @keyframes moveup{
+                100%{
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+            .bca{
+                border: 1px solid black;
+                padding: 10px 40px;
+                color: rgb(0, 0, 0);
+                font-size: 15px;
+                font-weight: 500;
+                margin: 10px;
+            }
+            .bca:hover{
+                background-color: #3e7eee;
+            }
+            .more{
+                display: flex;
+                width: 40%;
+                padding: 10px 40px;
+                margin: 10px;
+                font-size: 15px;
+                font-weight: 600;
+                margin-left: 5%;
+            }
+            .name{
+                margin-left: 5%;
+                font-size: 15px;
+                font-weight: 600;
+            }
+            .play{
+                display: flex;
+                margin-left: 5%;
+                font-size: 12px;
+                font-weight: 700;
+
+            }
+            .send{
+                display: flex;
+                border: 1px solid black;
+                color: white;
+                background-color: #000000;
+                padding: 10px 40px;
+                margin: 10px;
+                margin-left: 4%;
+            }
+            .send:hover{
+                transform: translateY(-5px);
+                background-color: #df4881;
+            }
+            .i{
+                margin-left: 4%;
+            }
+            .plus {
+                font-family: Arial, sans-serif;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+                background-color: #f4f4f4;
+            } 
+
+            .calendar {
+                max-width: 600px;
+                margin: auto;
+                background: white;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            }
+
+            .month {
+                text-align: center;
+                padding: 20px 0;
+                background-color: #247BA0;
+                color: white;
+                font-size: 24px;
+            }
+
+            .weekdays {
+                display: flex;
+                background-color: #f9f9f9;
+            }
+
+            .weekdays div, .days div {
+                flex: 1;
+                padding: 10px;
+                text-align: center;
+            }
+
+            .days {
+                display: grid;
+                grid-template-columns: repeat(7, 1fr);
+                text-align: center;
+            }
+
+            .day {
+                border-bottom: 1px solid #e0e0e0;
+                padding: 20px 0;
+                cursor: pointer;
+            }
+
+            .day:hover {
+                background-color: #f0f0f0;
+            }
+            .object{
+                width:40%;
+                height: 40%;
+                margin: 10px;
+                align-items: center;
+                justify-content: center;
+                background-color: #000000;
+                margin-left: 35%;
+                
+            }
+            .listen{
+                background-color: #222;
+                /* box-shadow: 0 4px 0 4px rgba(44, 225, 222, 0.15); */
+                border: 1px solid white;
+                padding: 10px 60px;
+                margin: 10px;
+                font-size: 15px;
+                font-weight: 600;
+                border-radius: 15px;
+            }
+            @media screen and(max-width:600px){
+                .listen{
+                    width: 95%;
+                    align-items: center;
+                    padding: 0.5rem 1rem;
+                    margin: 0 auto;
+                }
+                .engage{
+                    width: 95%;
+                }
+
+            }
+            .until{
+                display: flex;
+            }
+            .engage{
+                background-color: #222;
+                /* box-shadow: 0 4px 0 4px rgba(44, 225, 222, 0.15); */
+                border: 2px solid white;
+                color: #eee;
+                padding: 10px 60px;
+                margin: 10px;
+                font-size: 1rem;
+                font-weight: 600;
+                border-radius: 15px;
+
+            }
+            body {
+                font-family: Arial, sans-serif;
+                margin: 0;
+                padding: 0;
+                background: #f4f4f4;
+            }
+
+            span {
+                background: #333;
+                color: #000000;
+                padding: 10px 20px;
+                text-align: center;
+            }
+
+            h1 {
+                margin: 0;
+            }
+
+            main {
+                padding: 20px;
+            }
+
+            .applicants {
+                background: #fff;
+                margin: 20px 0;
+                padding: 20px;
+                border-radius: 8px;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+                text-align: center;
+            }
+
+            .applicant {
+                border-bottom: 1px solid #eee;
+                padding-bottom: 20px;
+                margin-bottom: 20px;
+                align-items: center;
+            }
+
+            .applicant:last-child {
+                border-bottom: none;
+                padding-bottom: 0;
+                margin-bottom: 0;
+            }
+
+            h2, h3 {
+                margin: 0 0 10px 0;
+            }
+
+            p {
+                margin: 0;
+                color: #666;
+            }
+            body {
+                font-family: Arial, sans-serif;
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            span {
+                background-color: #4f4b4b;
+                padding: 20px 0;
+                text-align: center;
+            }
+
+            .club {
+                padding: 20px;
+            }
+
+            h1, h2 {
+                color: #333;
+            }
+
+            .book-list .space{
+                list-style-type: none;
+                padding: 0;
+            }
+
+            .book-list .style {
+                margin-bottom: 10px;
+            }
+
+            .book-suggestion form {
+                display: flex;
+                flex-direction: column;
+                width: 300px;
+            }
+
+            .book-suggestion .live,
+            .book-suggestion .ports,
+            .book-suggestion .utf {
+                margin-bottom: 10px;
+            }
+
+            .book-suggestion .utf {
+                cursor: pointer;
+                padding: 10px;
+                background-color: #007bff;
+                color: white;
+                border: 1px solid black;
+                border-radius: 5px;
+            }
+            .utf:hover{
+                background-color: #c430d7;
+            }
+
+           .ports{
+            padding: 10px 30px;
+            border-radius: 5px;
+           }
+           body, html {
+                margin: 0;
+                padding: 0;
+                font-family: Arial, sans-serif;
+            }
+
+            span {
+                color: white;
+                padding: 20px;
+                text-align: center;
+            }
+
+            .lion {
+                display: flex;
+                justify-content: space-around;
+                padding: 20px;
+            }
+
+            .column {
+                width: 30%;
+                background-color: #f0f0f0;
+                margin: 10px;
+                padding: 10px;
+            }
+
+            .taskk {
+                background-color: white;
+                padding: 10px;
+                margin: 10px 0;
+                border-radius: 5px;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+
+            .columntodo {
+                width: 70%;
+                height: 40%;
+                background-color: #f0f0f0;
+                margin: 10px;
+                padding: 10px 40px;
+            }
+
+            .columnin-progress {
+                width: 70%;
+                height: 40%;
+                background-color: #f0f0f0;
+                margin: 10px;
+                padding: 10px 40px;
+            }
+
+            .columndone {
+                width: 70%;
+                height: 40%;
+                background-color: #f0f0f0;
+                margin: 10px;
+                padding: 10px 40px;
+            }
+            .editt{
+                background-color: #c430d7;
+                padding: 10px 30px;
+                margin: 10px;
+                font-size: 1.1rem;
+                font-weight: 600;
+                color: white;
+                border: 1px solid black;
+                border-radius: 10px;
+            }
+            .editt:hover{
+                background-color: #3e7eee;
+            }
+            .delett{
+                background-color: yellow;
+                padding: 10px 30px;
+                border: 1px solid black;
+                border-radius: 10px;
+                font-size: 1.1rem;
+                font-weight: 600;
+                color: white;
+                
+            }
+            .delett:hover{
+                background-color: red;
+            }
+            
+            .nav-link:hover{
+                text-decoration: underline;
+                color: #c430d7;
+
+            }
+            .nav-link a{
+                margin-right: 5%;
+            }
+
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary navbar-info bg-info fixed-top ">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#"></a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link " aria-current="page" href="#crud">CRUD</a>
+              </li>
+              <li class="nav-item active">
+                <a class="nav-link" href="#library">LIBRARYMANAGEMENT</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#recipe">RECIPE</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#student">STUDENTPORTAL</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#sportclub">SPORTCLUB</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#calendar">CALENDAR</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#okrs">OKRS</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#ats">ATS</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#bookclub">BOOKCLUB</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#projectmanagement">PROJECTMANAGEMENT</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+     <section id="crud" class="crud">
+    <main>
+        <div class="containerr" onload="readAll()">
+            <div class="form_container">
+                <form class="create_form">
+                <input type="text" placeholder="Enter a Name" class="name">
+                <input type="text" placeholder="Enter a Email" class="email">
+                <button type="button" onclick="add()">Create</button>
+                </form>
+                <form class="update_form">
+                <input type="text" hidden class="update_id">
+                <input type="text" placeholder="Name" class="uname">
+                <input type="text" placeholder="Email" class="uemail">
+                <button type="button" onclick="update()">Update</button>
+                </form>
+                <button class="addbtn" onclick="createForm()">Add +</button>
+                <br />
+                <table class="table">
+                    <thead>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Action</th>
+                    </thead>
+                    <tbody class="table_data">
+    
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+    </section>
+    <section id="library" class="library" onclick="selectAll()">
+        <div class="content_u">
+            <div class="library_content">
+                <form class="content_create">
+                    <input type="text" placeholder="Enter Book Title" class="title">
+                    <input type="text" placeholder="Enter Author Name" class="author">
+                    <input type="text" placeholder="Enter Book Genre" class="genre">
+                    <input type="text" placeholder="Enter Publish Year" class="year">
+                    <input type="text" placeholder="Enter Quantity" class="quantity">
+                    <button onclick="book()">Book Add</button>
+                </form>
+                <form class="content_update">
+                    <input type="text" hidden class="content_id">
+                    <input type="text" placeholder="Enter Book Title" class="utitle">
+                    <input type="text" placeholder="Enter Author Name" class="uauthor">
+                    <input type="text" placeholder="Enter Book Genre" class="ugenre">
+                    <input type="text" placeholder="Enter Publish Year" class="uyear">
+                    <input type="text" placeholder="Enter Quantity" class="uquantity">
+                    <button onclick="updateBook()">Book Update</button>
+                </form>
+                <button class="addbook" onclick="contentCreate()">Add Book +</button>
+                <br />
+                <table class="utabel">
+                    <thead>
+                        <th>Title</th>
+                        <th>Author</th>
+                        <th>Genre</th>
+                        <th>Year</th>
+                        <th>Quantity</th>
+                        <th>Action</th>
+                    </thead>
+                    <tbody class="table_udata">
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+    <section id="recipe" class="recipe">
+       <nav class="main_class">
+        <form class="input_container">
+            <input type="text" placeholder="search...." class="search_class">
+            <i class="fa-regular fa-magnifying-glass"></i>
+        </form>
+        <ul>
+            <li><a href="#shop" class="href">shop</a></li>
+            <li><a href="#customer" class="href">customer</a></li>
+            <li><a href="#contact" class="href">contact</a></li>
+        </ul>
+       </nav>
+        <main class="core">
+            <div class="container_ui">
+                <div class="img"></div>
+
+                    <div class="content_container">
+                        <h1 class="box">Food Name</h1>
+                        <p class="text">
+                            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Inventore architecto quidem 
+                            expedita quaerat nesciunt consectetur deserunt, tempore sit officiis saepe iusto minus
+                            labore voluptatum, modi possimus ad numquam praesentium animi. Nulla maiores perspiciatis
+                            ab voluptatem sed vero quasi laborum totam.
+                        </p>
+                        <button class="chart">$20 - Order Now</button>
+                </div>
+            </div>
+        </main>
+        <section class="int"></section>
+    </section>
+   <section class="shop" id="shop">
+    <div class="heading">
+        <h2>Food Shop</h2>
+        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nulla, ea.</p>
+    </div>
+    <div class="shop_container">
+        <div class="shop_box">
+            <div class="shop_img">
+                <img src="img2.jpg">
+            </div>
+            <h3 style="color: red; font-size: 1rem; font-weight: 600;">Butter Chicken</h3>
+            <p></p>
+            <h2>$ 14.2</h2>
+            <i class="fa-solid fa-cart-shopping" class="shopping_ui"></i>
+
+
+        </div>
+        <div class="shop_box">
+            <div class="shop_img">
+                <img src="img3.jpg">
+            </div>
+            <h3 style="color: red;font-size: 1rem; font-weight: 600;">Chicken Beriyani</h3>
+            <h2>$ 11.0</h2>
+            <i class="fa-solid fa-cart-shopping"></i>
+
+
+        </div>
+        <div class="shop_box">
+            <div class="shop_img">
+                <img src="img4.jpg" alt="">
+            </div>
+            <h3 style="color: red;font-size: 1rem; font-weight: 600;">Chili chicken</h3>
+            <h2>$ 9.2</h2>
+            <i class="fa-solid fa-cart-shopping"></i>
+
+
+        </div>
+        <div class="shop_box">
+            <div class="shop_img">
+                <img src="img5.jpg" alt="">
+            </div>
+            <h3 style="color: red;font-size: 1rem; font-weight: 600;">Chicken Tandoori</h3>
+            <h2>$ 15.1</h2>
+            <i class="fa-solid fa-cart-shopping"></i>
+
+
+        </div>
+        <div class="shop_box">
+            <div class="shop_img">
+                <img src="img6.jpg" alt="">
+            </div>
+            <h3 style="color: red;font-size: 1rem; font-weight: 600;">Chicken Palak</h3>
+            <h2>$ 8.2</h2>
+            <i class="fa-solid fa-cart-shopping"></i>
+
+
+        </div>
+        <div class="shop_box">
+            <div class="shop_img">
+                <img src="img7.jpg" alt="">
+            </div>
+            <h3 style="color: red;font-size: 1rem; font-weight: 600;">Chicken Popcorn</h3>
+            <h2>$ 17.0</h2>
+            <i class="fa-solid fa-cart-shopping"></i>
+
+
+        </div>
+        <div class="shop_box">
+            <div class="shop_img">
+                <img src="img8.jpg" alt="">
+            </div>
+            <h3 style="color: red;font-size: 1rem; font-weight: 600;">Chicken Kurma</h3>
+            <h2>$ 19.2</h2>
+            <i class="fa-solid fa-cart-shopping"></i>
+
+
+        </div>
+        <div class="shop_box">
+            <div class="shop_img">
+                <img src="img10.jpg" alt="">
+            </div>
+            <h3 style="color: red;font-size: 1rem; font-weight: 600;">Chicken Bhuna</h3>
+            <h2>$ 20.4</h2>
+            <i class="fa-solid fa-cart-shopping"></i>
+
+
+        </div>
+        <div class="shop_box">
+            <div class="shop_img">
+                <img src="img9.jpg" alt="">
+            </div>
+            <h3 style="color: red;font-size: 1rem; font-weight: 600;">Kadai Chicken</h3>
+            <h2>$ 23.1</h2>
+            <i class="fa-solid fa-cart-shopping"></i>
+
+
+        </div> <div class="shop_box">
+            <div class="shop_img">
+                <img src="img11.jpg" alt="">
+            </div>
+            <h3 style="color: red;font-size: 1rem; font-weight: 600;">Chili chicken</h3>
+            <h2>$ 25.0</h2>
+            <i class="fa-solid fa-cart-shopping"></i>
+
+
+        </div>
+       
+    </div>
+
+   </section>
+   <section id="customer" class="customer">
+        <div class="heading">
+            <h2 style="margin-top: 5%;">Our Customer's</h2>
+            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Aperiam, sunt!</p>
+        </div>
+        <div class="customer_container">
+            <div class="tox_container">
+                <img src="puhan444.jpg">
+                <div class="stars">
+
+
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star-half-stroke"></i>
+                </div>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi officia culpa iusto alias autem, voluptates nisi error, repellat placeat unde quos sit magnam vero? Maxime debitis explicabo eum neque nulla.</p>
+                <h2>satyabrata puhan</h2>
+            </div>
+            <div class="tox_container">
+                <img src="pinku.png">
+                <div class="stars">
+
+
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star-half-stroke"></i>
+                </div>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi officia culpa iusto alias autem, voluptates nisi error, repellat placeat unde quos sit magnam vero? Maxime debitis explicabo eum neque nulla.</p>
+                <h2>Rudrapratap Swain</h2>
+            </div>
+            <div class="tox_container">
+                <img src="img12.jpg" >
+                <div class="stars">
+
+
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star-half-stroke"></i>
+                </div>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi officia culpa iusto alias autem, voluptates nisi error, repellat placeat unde quos sit magnam vero? Maxime debitis explicabo eum neque nulla.</p>
+                <h2>Bikashchandra Nayak</h2>
+            </div>
+        </div>
+   </section>
+   <section id="contact" class="contact">
+
+    <h2 style="text-align: center; margin: 10px; margin-top: 5%;">Contact In,fo</h2>
+    <input type="text" placeholder="Enter a Name" class="uuu">
+    <input type="text" placeholder="Enter a Email" class="uuu">
+    <input type="text" placeholder="Enter a Number" class="uuu">
+    <input type="submit" value="login" class="submit">
+   </section>
+   <section class="student" id="student">
+    <div class="heroo">
+        <nav class="ball">
+        <span class="logo" style="color: white; font-size: 20px;">STUDENT</span>
+        <ul>
+            <li><a href="" class="text">About</a></li>
+            <li><a href="#courses" class="text">Courses</a></li>
+            <li><a href="" class="text">ApplyNow</a></li>
+            <li><a href="" class="text">Result</a></li>
+            <li><a href="" class="text">Notification</a></li>
+        </ul>
+        <div>
+            <a href="" class="login-btn">Login</a>
+        </div>
+        </nav>
+        <div class="content">
+            <h1 class="anim">StudentPortal</h1>
+            <p>
+             <marquee>The purpose of School is to prepare student with promise to enhance their</marquee><br>
+              intellectual,physical,social,emotional,spiritual,and artistic growth so that<br>
+             <marquee>they may realize their power for good are citizens.</marquee>
+            </p>
+            <a href="#courses" class="join-btn">APPLY NOW</a>
+        </div>
+        <img src="collegestudent.png" class="feature-image">
+    
+    </div>
+    
+   </section>
+   <section id="courses" class="courses">
+    <div class="heading">
+        <h2 style="margin-top: 5%;">OUR PROFESSIONAL COURSES</h2>
+        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Aperiam, sunt!</p>
+    </div>
+    <div class="customer_container">
+        <div class="tox_container">
+            <img src="student-boy-icon.webp" alt="">
+            <div class="stars">
+
+
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star-half-stroke"></i>
+            </div>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi officia culpa iusto alias autem, voluptates nisi error, repellat placeat unde quos sit magnam vero? Maxime debitis explicabo eum neque nulla.</p>
+            <h2>Computer Science</h2>
+            <button class="bca">APPLY NOW</button>
+        </div>
+        <div class="tox_container">
+            <img src="student-boy-icon.webp" alt="">
+            <div class="stars">
+
+
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star-half-stroke"></i>
+            </div>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi officia culpa iusto alias autem, voluptates nisi error, repellat placeat unde quos sit magnam vero? Maxime debitis explicabo eum neque nulla.</p>
+            <h2>Bachelor Of Computer Application</h2>
+            <button class="bca">APPLY NOW</button>
+        </div>
+        <div class="tox_container">
+            <img src="student-boy-icon.webp" alt="">
+            <div class="stars">
+
+
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star-half-stroke"></i>
+            </div>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi officia culpa iusto alias autem, voluptates nisi error, repellat placeat unde quos sit magnam vero? Maxime debitis explicabo eum neque nulla.</p>
+            <h2>Information Techonology Management</h2>
+            <button class="bca">APPLY NOW</button>
+        </div>
+    </div>  
+   </section>
+   <section id="sportclub" class="sportclub">
+        <h2 style="margin-left: 40%; margin-top: 5%;">Sport Club Membership</h2>
+
+        <main>
+            <label class="name">Name</label>
+            <input type="text" placeholder="First" class="more">
+            <input type="text" placeholder="Last" class="more">
+            <label class="name">Phone</label>
+            <input type="text" placeholder="#############" class="more">
+            <label class="name">Address</label>
+            <input type="address" placeholder="Street Address" class="more">
+            <input type="address" placeholder="Street Address Line 2" class="more">
+            <input type="text" placeholder="city" class="more">
+            <input type="text" placeholder="Resion" class="more">
+            <input type="text" placeholder="Postal/Zip Code" class="more">
+            <select class="more">
+                <option value="option">Kujang</option>
+                <option value="option">Chatua</option>
+                <option value="option">Cuttack</option>
+            </select>
+
+            <label class="name">Date of Birth</label>
+            <input type="date" placeholder="MM/DD/YYYY" class="more">
+
+            <p style="margin-left: 4%;">Choose Your Sport</p>
+            <label class="name">Play Football</label>
+            <input type="radio" class="play">
+            <label class="name">Play Hocky</label>
+            <input type="radio" class="play">
+            <label class="name">Play Tennis</label>
+            <input type="radio" class="play">
+            <label class="name">Play Cricket</label>
+            <input type="radio" class="play">
+
+            <p style="margin-left: 4%;">Term of Service<sup style="color: red; font-size: 15px;">*</sup></p>
+
+            <input type="checkbox" class="i">I agree to the <a href="#" style="color: skyblue;">terms of Service</a>
+
+            <button class="send">SEND</button>
+        </main>
+   </section>
+   <section id="calendar" class="calendar">
+    <h2 style="margin-left: 40%; font-size: 20px; font-weight: 600;">Content Markting Calendar</h2>
+    <div class="plus">
+    <div class="calendar">
+        <div class="month">February 2024</div>
+        <div class="weekdays">
+            <div>Sun</div>
+            <div>Mon</div>
+            <div>Tue</div>
+            <div>Wed</div>
+            <div>Thu</div>
+            <div>Fri</div>
+            <div>Sat</div>
+        </div>
+        <div class="days">
+            <div class="day">1</div>
+            <div class="day">2</div>
+            <div class="day">3</div>
+            <div class="day">4</div>
+            <div class="day">5</div>
+            <div class="day">6</div>
+            <div class="day">7</div>
+            <div class="day">8</div>
+            <div class="day">9</div>
+            <div class="day">10</div>
+            <div class="day">11</div>
+            <div class="day">12</div>
+            <div class="day">13</div>
+            <div class="day">14</div>
+            <div class="day">15</div>
+            <div class="day">16</div>
+            <div class="day">17</div>
+            <div class="day">18</div>
+            <div class="day">19</div>
+            <div class="day">20</div>
+            <div class="day">21</div>
+            <div class="day">22</div>
+            <div class="day">23</div>
+            <div class="day">24</div>
+            <div class="day">25</div>
+            <div class="day">26</div>
+            <div class="day">27</div>
+            <div class="day">28</div>
+            <div class="day">29</div>
+            <div class="day">30</div>
+            <div class="day">31</div>
+            
+        </div>
+        </div>
+    </div>
+   </section>
+   <section id="okrs" class="okrs">
+    <div class="object">
+        <h2 style="margin-left: 35%; margin-top: 5%; color: #eee;">Objectves and key results.</h2>
+        <div class="listen">
+        <h3 style="color: rgb(8, 255, 78);">Good KRs (outcomes)</h3>
+
+        <p class="until">90% of attendees listen to
+            webinars until end of session
+        </p>
+        <p class="until">
+            Drive 10,000 unique views to website
+        </p>
+        <p class="until">
+            increase recurring participation rate from 20% to 60%
+        </p>
+        </div>
+        <div class="engage">
+        <h3 style="color: red;">Bad KRs (outputs)</h3>
+        <p class="until">
+            Organize 5 great webinars to engage the audience
+        </p>
+        <p class="until">
+            Careate amazing content for the blog
+        </p>
+        <p class="until">
+            Follow up with participants of previous event
+        </p>
+        </div>
+    </div>
+   </section>
+   <section id="ats" class="ats">
+    <span>
+        <h1>Application Tracking System</h1>
+    </span>
+    <main>
+        <section class="applicants">
+            <h2>Applicants</h2>
+            <div class="applicant" id="applicant1">
+                <h3>SoumyaRanjan Nayak</h3>
+                <p>Position Applied: Web Developer</p>
+                <p>Status: Under Review</p>
+            </div>
+            <div class="applicant" id="applicant2">
+                <h3>Chiranjibi Sahoo</h3>
+                <p>Position Applied: Software Engineer</p>
+                <p>Status: Interview Scheduled</p>
+            </div>
+            <div class="applicant" id="applicant2">
+                <h3>Biswajit Pradhan</h3>
+                <p>Position Applied: Fullstack Development</p>
+                <p>Status: Under Review</p>
+            </div>
+            <div class="applicant" id="applicant2">
+                <h3>Rudrapratap Swain</h3>
+                <p>Position Applied:java full stack developer</p>
+                <p>Status: Interview Scheduled</p>
+            </div>
+            <div class="applicant" id="applicant2">
+                <h3>Chinmaya barik</h3>
+                <p>Position Applied: python full stack developer</p>
+                <p>Status: Interview Scheduled</p>
+            </div>
+        </section>
+    </main>
+   </section>
+   <section id="bookclub" class="bookclub">
+    <span>
+        <h1>Book Club App</h1>
+    </span>
+    <main class="club">
+        <section class="book-list">
+            <h2>Recommended Books</h2>
+            <div class="space">
+                <p class="style"><strong>Book Title:</strong> Java <strong>Author:</strong>James Gosling</p>
+                <p class="style"><strong>Book Title:</strong> Html <strong>Author:</strong>Tim Berners-Lee</p>
+                <p class="style"><strong>Book Title:</strong> Css<strong>Author:</strong> HAYkon Wium Lie</p>
+                <p class="style"><strong>Book Title:</strong> Python <strong>Author:</strong> Guido van Rossum</p>
+                <p class="style"><strong>Book Title:</strong> C++ <strong>Author:</strong> Bjarne Stroustrup</p>
+                <p class="style"><strong>Book Title:</strong> C# <strong>Author:</strong>Anders Hejlsberg </p>
+                <p class="style"><strong>Book Title:</strong> Php<strong>Author:</strong>Rasmus Lerdorf </p>
+                
+            </div>
+        </section>
+        <section class="book-suggestion">
+            <h2>Suggest a Book</h2>
+            <form id="suggestionForm">
+                <label for="bookTitle" class="live">Book Title:</label>
+                <input type="text" id="bookTitle" name="bookTitle" required class="ports">
+                <label for="bookAuthor">Author:</label>
+                <input type="text" id="bookAuthor" name="bookAuthor" required class="ports">
+                <button class="utf">Submit</button>
+            </form>
+        </section>
+    </main>
+   
+   </section>
+   <section id="projectmanagement" class="projectmanagement">
+    <span>
+        <h1>Project Management App</h1>
+    </span>
+    <main class="lion">
+        <section class="project-board">
+            <div class="columntodo">
+                <h2>To Do</h2>
+                <div class="taskk">Task 1</div>
+                <div class="taskk">Task 2</div>
+                <div class="taskk">Task 3</div>
+                <div class="taskk">Task 4</div>
+                
+            </div>
+            <div class="columnin-progress">
+                <h2>In Progress</h2>
+                <div class="taskk">Task 5</div>
+                <div class="taskk">Task 6</div>
+                <div class="taskk">Task 7</div>
+                <div class="taskk">Task 8</div>
+                
+            </div>
+            <div class="columndone">
+                <h2>Done</h2>
+                <div class="taskk">Task 9</div>
+                <div class="taskk">Task 10</div>
+                <div class="taskk">Task 11</div>
+                <div class="taskk">Task 12</div>
+            </div>
+        </section>
+    </main>
+
+   </section>
+
+
+
+
+   
+
+    <script src="./index.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    
+</body>
+</html>
